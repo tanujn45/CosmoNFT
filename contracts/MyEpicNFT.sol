@@ -9,20 +9,58 @@ import {Base64} from "@openzeppelin/contracts/utils/Base64.sol";
 contract MyEpicNFT is ERC721URIStorage {
     uint256 private _tokenIds;
 
-    string baseSvg =
-        "<svg xmlns='http://www.w3.org/2000/svg' preserveAspectRatio='xMinYMin meet' viewBox='0 0 350 350'><style>.base { fill: white; font-family: serif; font-size: 24px; }</style><rect width='100%' height='100%' fill='black' /><text x='50%' y='50%' class='base' dominant-baseline='middle' text-anchor='middle'>";
+    string baseSvgFirst =
+        "<svg xmlns='http://www.w3.org/2000/svg' preserveAspectRatio='xMinYMin meet' viewBox='0 0 350 350'><style>.base { fill: black; font-family: serif; font-size: 24px; }</style><rect width='100%' height='100%' fill='";
+    string baseSvgSecond =
+        "' /><text x='50%' y='50%' class='base' dominant-baseline='middle' text-anchor='middle'>";
 
-    string[] words = [
-        "Boop",
-        "Bop",
-        "Bap",
-        "Bip",
-        "Bep",
-        "Bup",
-        "Bip",
-        "Bop",
-        "Bap",
-        "Bip"
+    string[] firstWords = [
+        "delicious",
+        "smelly",
+        "dashing",
+        "berserk",
+        "crazy",
+        "sticky",
+        "squirmy",
+        "slimy"
+    ];
+
+    string[] secondWords = [
+        "wet",
+        "dysfunctional",
+        "little",
+        "chilly",
+        "silly",
+        "salty",
+        "sour",
+        "sweet",
+        "spicy"
+    ];
+
+    string[] thirdWords = [
+        "penguin",
+        "cat",
+        "dog",
+        "fish",
+        "bird",
+        "elephant",
+        "giraffe",
+        "lion",
+        "tiger",
+        "bear",
+        "jonathan"
+    ];
+
+    string[] colours = [
+        "green",
+        "cyan",
+        "red",
+        "yellow",
+        "purple",
+        "orange",
+        "pink",
+        "white",
+        "brown"
     ];
 
     event NewEpicNFTMinted(address sender, uint256 tokenId);
@@ -37,8 +75,8 @@ contract MyEpicNFT is ERC721URIStorage {
         uint256 rand = random(
             string(abi.encodePacked("FIRST_WORD", Strings.toString(tokenId)))
         );
-        rand = rand % words.length;
-        return words[rand];
+        rand = rand % firstWords.length;
+        return firstWords[rand];
     }
 
     function pickRandomSecondWord(
@@ -47,8 +85,8 @@ contract MyEpicNFT is ERC721URIStorage {
         uint256 rand = random(
             string(abi.encodePacked("SECOND_WORD", Strings.toString(tokenId)))
         );
-        rand = rand % words.length;
-        return words[rand];
+        rand = rand % secondWords.length;
+        return secondWords[rand];
     }
 
     function pickRandomThirdWord(
@@ -57,8 +95,18 @@ contract MyEpicNFT is ERC721URIStorage {
         uint256 rand = random(
             string(abi.encodePacked("THIRD_WORD", Strings.toString(tokenId)))
         );
-        rand = rand % words.length;
-        return words[rand];
+        rand = rand % thirdWords.length;
+        return thirdWords[rand];
+    }
+
+    function pickRandomColour(
+        uint256 tokenId
+    ) public view returns (string memory) {
+        uint256 rand = random(
+            string(abi.encodePacked("COLOUR", Strings.toString(tokenId)))
+        );
+        rand = rand % colours.length;
+        return colours[rand];
     }
 
     function random(string memory input) internal pure returns (uint256) {
@@ -76,6 +124,7 @@ contract MyEpicNFT is ERC721URIStorage {
         );
         uint256 newItemId = _tokenIds;
 
+        string memory colour = pickRandomColour(newItemId);
         string memory first = pickRandomFirstWord(newItemId);
         string memory second = pickRandomSecondWord(newItemId);
         string memory third = pickRandomThirdWord(newItemId);
@@ -84,7 +133,13 @@ contract MyEpicNFT is ERC721URIStorage {
         );
 
         string memory finalSvg = string(
-            abi.encodePacked(baseSvg, combinedWord, "</text></svg>")
+            abi.encodePacked(
+                baseSvgFirst,
+                colour,
+                baseSvgSecond,
+                combinedWord,
+                "</text></svg>"
+            )
         );
 
         string memory json = Base64.encode(

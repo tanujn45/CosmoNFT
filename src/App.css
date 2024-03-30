@@ -1,38 +1,150 @@
-.App {
+@import url("https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Noto+Sans:ital,wght@0,100..900;1,100..900&display=swap");
+
+/* Flickering animation */
+@keyframes flicker {
+  0%,
+  18%,
+  22%,
+  25%,
+  53%,
+  57%,
+  100% {
+    text-shadow: 0 0 4px #f09, 0 0 7px #f09, 0 0 7px #f09, 0 0 11px #f09,
+      0 0 19px #f09, 0 0 40px #f09, 0 0 60px #f09, 0 0 80px #f09;
+  }
+
+  20%,
+  24%,
+  55% {
+    text-shadow: none;
+  }
+}
+
+@keyframes pulsate {
+  100% {
+    /* Larger blur radius */
+    text-shadow: 0 0 4px #fff, 0 0 7px #fff, 0 0 7px #fff, 0 0 11px #f09,
+      0 0 19px #f09, 0 0 40px #f09, 0 0 60px #f09, 0 0 80px #f09;
+  }
+  0% {
+    /* A slightly smaller blur radius */
+    text-shadow: 0 0 4px #fff, 0 0 4px #fff, 0 0 6px #fff, 0 0 7px #f09,
+      0 0 11px #f09, 0 0 19px #f09, 0 0 40px #f09, 0 0 60px #f09;
+  }
+}
+
+body {
+  background: linear-gradient(to right, rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0)),
+    url("./assets/background2.jpeg") center / cover no-repeat;
+
+  background-attachment: fixed;
+}
+
+.neonText {
+  /* animation: flicker 3s infinite alternate; */
+  animation: pulsate 0.6s ease-in-out infinite alternate;
+  color: #fff;
+}
+
+h1 {
+  font-family: "Bebas Neue", cursive;
+  font-size: 8rem;
+  /* color: #ca558a; */
+  /* text-shadow: 0 0 5px #ca558a, 0 0 10px #ca558a, 0 0 20px #ca558a, 0 0 30px #ca558a; */
+  line-height: 0.9;
+}
+
+/* For medium screens */
+@media (max-width: 992px) {
+  h1 {
+    font-size: 6.5rem;
+  }
+}
+
+/* For small screens */
+@media (max-width: 768px) {
+  h1 {
+    font-size: 5rem;
+  }
+}
+
+/* For extra small screens */
+@media (max-width: 576px) {
+  h1 {
+    font-size: 5rem;
+  }
+}
+
+@media (max-width: 425px) {
+  h1 {
+    font-size: 5rem;
+  }
+}
+
+@media (max-width: 320px) {
+  h1 {
+    font-size: 4.5rem;
+  }
+}
+
+h2 {
+  font-family: "Bebas Neue", cursive;
+  font-size: 1.3rem;
+  letter-spacing: 2px;
+  color: #fff;
   text-align: center;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
+.text-container {
   min-height: 100vh;
+}
+
+p {
+  color: rgba(255, 255, 255, 0.7);
+  font-family: "Bebas Neue", cursive;
+  font-size: 2rem;
+}
+
+.btn-style {
+  padding: 10px 40px;
+  background-color: rgba(0, 0, 0, 0);
+  border: solid 2px #fff;
+  color: #fff;
+  text-transform: uppercase;
+  font-family: "Bebas Neue", cursive;
+  font-size: 1.3rem;
+  letter-spacing: 2px;
+}
+
+.btn-style:hover {
+  background-color: #fff;
+  color: #000;
+}
+
+/* .btn-style:hover {
+  background-color: #fff;
+  color: #000;
+} */
+
+.bg-custom {
+  background: linear-gradient(to bottom right, #000, #434343);
+}
+
+.color-black {
+  color: #000;
+}
+
+/* HERO */
+#hero {
+  min-height: 100vh;
+  padding: 100px 0;
   display: flex;
-  flex-direction: column;
   align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
-
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  position: relative;
+  overflow: hidden;
+  z-index: 100;
 }
