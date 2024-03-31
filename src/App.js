@@ -2,7 +2,7 @@ import "./App.css";
 import { ethers } from "ethers";
 import React, { useEffect, useState, useRef } from "react";
 import myEpicNft from "./utils/MyEpicNFT.json";
-import nft1 from "./assets/nft/nft1.svg";
+import nft1 from "./assets/nft.svg";
 import bgMusic from "./assets/bg-music.mp3";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -10,7 +10,7 @@ import "react-toastify/dist/ReactToastify.css";
 const OPENSEA_LINK = "";
 const TOTAL_MINT_COUNT = 50;
 
-const CONTRACT_ADDRESS = "0xa245A55a36bb2E7cB0c29945D04C7311015b8F0a";
+const CONTRACT_ADDRESS = "0xaEbA02D7D055F8014ad5855bb2F1699ef0160905";
 
 const App = () => {
   const [currentAccount, setCurrentAccount] = useState("");
@@ -63,6 +63,9 @@ const App = () => {
    * @returns {Promise<void>}
    */
   const connectWallet = async () => {
+    if (audioRef.current) {
+      audioRef.current.play();
+    }
     try {
       const { ethereum } = window;
 
@@ -81,10 +84,6 @@ const App = () => {
       setupEventListener();
     } catch (error) {
       console.log(error);
-    }
-
-    if (audioRef.current) {
-      audioRef.current.play();
     }
   };
 
@@ -202,7 +201,11 @@ const App = () => {
     </button>
   );
 
-  const renderMintedNFT = () => <a href={mintedNFT}>Your Minted NFT</a>;
+  const renderMintedNFT = () => (
+    <a href={mintedNFT} target="_blank">
+      Your Minted NFT
+    </a>
+  );
 
   return (
     <section id="hero">

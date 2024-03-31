@@ -15,14 +15,14 @@ contract MyEpicNFT is ERC721URIStorage {
         "' /><text x='50%' y='50%' class='base' dominant-baseline='middle' text-anchor='middle'>";
 
     string[] firstWords = [
-        "delicious",
-        "smelly",
-        "dashing",
-        "berserk",
-        "crazy",
-        "sticky",
-        "squirmy",
-        "slimy"
+        "Delicious",
+        "Smelly",
+        "Dashing",
+        "Berserk",
+        "Crazy",
+        "Sticky",
+        "Squirmy",
+        "Slimy"
     ];
 
     string[] secondWords = [
