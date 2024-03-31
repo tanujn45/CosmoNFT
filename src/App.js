@@ -10,7 +10,7 @@ import "react-toastify/dist/ReactToastify.css";
 const OPENSEA_LINK = "";
 const TOTAL_MINT_COUNT = 50;
 
-const CONTRACT_ADDRESS = "0x464698959D05e1162e25d7E402F02e229C09BA58";
+const CONTRACT_ADDRESS = "0xa245A55a36bb2E7cB0c29945D04C7311015b8F0a";
 
 const App = () => {
   const [currentAccount, setCurrentAccount] = useState("");

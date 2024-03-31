@@ -118,10 +118,6 @@ contract MyEpicNFT is ERC721URIStorage {
     }
 
     function makeAnEpicNFT() public {
-        require(
-            _tokenIds < 50,
-            "Only 50 NFTs can be minted. No more NFTs can be minted."
-        );
         uint256 newItemId = _tokenIds;
 
         string memory colour = pickRandomColour(newItemId);
