@@ -14,6 +14,9 @@ const CONTRACT_ADDRESS = "0x464698959D05e1162e25d7E402F02e229C09BA58";
 
 const App = () => {
   const [currentAccount, setCurrentAccount] = useState("");
+  const [totalMintCount, setTotalMintCount] = useState(0);
+  const [mintedNFT, setMintedNFT] = useState("");
+  const [isMinting, setIsMinting] = useState(false);
   const audioRef = useRef();
 
   /**
@@ -38,6 +41,7 @@ const App = () => {
     const sepoliaChainId = "0xaa36a7"; // Sepolia Test network
     if (chainId !== sepoliaChainId) {
       toast.error("You are not connected to the Sepolia Test Network!");
+      return;
     }
 
     const accounts = await ethereum.request({ method: "eth_accounts" });
@@ -47,6 +51,7 @@ const App = () => {
       console.log("Found an authorized account:", account);
       setCurrentAccount(account);
 
+      getTotalMintCount();
       setupEventListener();
     } else {
       console.log("No authorized account found");
@@ -83,6 +88,29 @@ const App = () => {
     }
   };
 
+  const getTotalMintCount = async () => {
+    try {
+      const { ethereum } = window;
+
+      if (ethereum) {
+        const provider = new ethers.providers.Web3Provider(ethereum);
+        const signer = provider.getSigner();
+        const connectedContract = new ethers.Contract(
+          CONTRACT_ADDRESS,
+          myEpicNft.abi,
+          signer
+        );
+
+        let mintCount = await connectedContract.getTotalNFTsMintedSoFar();
+        setTotalMintCount(mintCount.toNumber());
+      } else {
+        console.log("Ethereum object doesn't exist!");
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   /**
    * Setup event listener
    * @returns {Promise<void>}
@@ -92,8 +120,8 @@ const App = () => {
       const { ethereum } = window;
 
       if (ethereum) {
-        const provider = new ethers.BrowserProvider(ethereum);
-        const signer = await provider.getSigner();
+        const provider = new ethers.providers.Web3Provider(ethereum);
+        const signer = provider.getSigner();
         const connectedContract = new ethers.Contract(
           CONTRACT_ADDRESS,
           myEpicNft.abi,
@@ -102,8 +130,8 @@ const App = () => {
 
         connectedContract.on("NewEpicNFTMinted", (from, tokenId) => {
           console.log(from, tokenId.toNumber());
-          alert(
-            `Hey there! We've minted your NFT and sent it to your wallet. It may be blank right now. It can take a max of 10 min to show up on OpenSea. Here's the link: https://testnets.opensea.io/assets/${CONTRACT_ADDRESS}/${tokenId.toNumber()}`
+          setMintedNFT(
+            `https://testnets.opensea.io/assets/sepolia/${CONTRACT_ADDRESS}/${tokenId.toNumber()}`
           );
         });
       } else {
@@ -122,13 +150,12 @@ const App = () => {
     if (audioRef.current) {
       audioRef.current.play();
     }
-
     try {
       const { ethereum } = window;
 
       if (ethereum) {
-        const provider = new ethers.BrowserProvider(ethereum);
-        const signer = await provider.getSigner();
+        const provider = new ethers.providers.Web3Provider(ethereum);
+        const signer = provider.getSigner();
         const connectedContract = new ethers.Contract(
           CONTRACT_ADDRESS,
           myEpicNft.abi,
@@ -136,19 +163,8 @@ const App = () => {
         );
 
         console.log("Going to pop wallet now to pay gas...");
+        setIsMinting(true);
         let nftTxn = await connectedContract.makeAnEpicNFT();
-
-        toast.promise(nftTxn, {
-          loading: "Minting NFT...",
-          success: (nftTxn) => {
-            console.log(nftTxn);
-            console.log(
-              `Mined, see transaction: https://sepolia.etherscan.io/tx/${nftTxn.hash}`
-            );
-            return `NFT successfully minted! See transaction: https://sepolia.etherscan.io/tx/${nftTxn.hash}`;
-          },
-          error: "Error minting NFT",
-        });
 
         console.log("Mining...please wait.");
         await nftTxn.wait();
@@ -156,6 +172,8 @@ const App = () => {
         console.log(
           `Mined, see transaction: https://sepolia.etherscan.io/tx/${nftTxn.hash}`
         );
+        getTotalMintCount();
+        setIsMinting(false);
       } else {
         console.log("Ethereum object doesn't exist!");
       }
@@ -165,7 +183,6 @@ const App = () => {
   };
 
   useEffect(() => {
-    console.log("UseEffect is called!");
     checkIfWalletIsConnected();
   }, []);
 
@@ -176,10 +193,16 @@ const App = () => {
   );
 
   const renderMintUI = () => (
-    <button onClick={askContractToMintNft} className="btn-style">
-      Mint NFT
+    <button
+      onClick={askContractToMintNft}
+      disabled={isMinting}
+      className="btn-style"
+    >
+      {isMinting ? "Minting..." : "Mint NFT"}
     </button>
   );
+
+  const renderMintedNFT = () => <a href={mintedNFT}>Your Minted NFT</a>;
 
   return (
     <section id="hero">
@@ -192,12 +215,19 @@ const App = () => {
               <br />
               Studio
             </h1>
-            <p className="header gradient-text">Craft, Click, Crypto</p>
+            <h3>Craft, Click, Crypto</h3>
+            <h4 className="mb-3">
+              <span className="color-pink">{totalMintCount}</span> NFTs minted
+            </h4>
 
             {currentAccount === ""
               ? renderNotConnectedContainer()
               : renderMintUI()}
+            <div className="mt-2">
+              {mintedNFT === "" ? null : renderMintedNFT()}
+            </div>
           </div>
+
           <div className="col-lg-4 col-md-5 col-sm-6 col-11 mb-5">
             <div className="p-3 bg-custom">
               <img src={nft1} alt="CosmoPunk" />

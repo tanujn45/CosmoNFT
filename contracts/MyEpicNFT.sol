@@ -26,29 +26,29 @@ contract MyEpicNFT is ERC721URIStorage {
     ];
 
     string[] secondWords = [
-        "wet",
-        "dysfunctional",
-        "little",
-        "chilly",
-        "silly",
-        "salty",
-        "sour",
-        "sweet",
-        "spicy"
+        "Wet",
+        "Dysfunctional",
+        "Little",
+        "Chilly",
+        "Silly",
+        "Salty",
+        "Sour",
+        "Sweet",
+        "Spicy"
     ];
 
     string[] thirdWords = [
-        "penguin",
-        "cat",
-        "dog",
-        "fish",
-        "bird",
-        "elephant",
-        "giraffe",
-        "lion",
-        "tiger",
-        "bear",
-        "jonathan"
+        "Penguin",
+        "Cat",
+        "Dog",
+        "Fish",
+        "Bird",
+        "Elephant",
+        "Giraffe",
+        "Lion",
+        "Tiger",
+        "Bear",
+        "Jonathan"
     ];
 
     string[] colours = [

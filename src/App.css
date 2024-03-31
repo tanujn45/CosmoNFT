@@ -36,7 +36,7 @@
 
 body {
   background: linear-gradient(to right, rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0)),
-    url("./assets/background2.jpeg") center / cover no-repeat;
+    url("./assets/background.jpeg") center / cover no-repeat;
 
   background-attachment: fixed;
 }
@@ -98,12 +98,21 @@ h2 {
 
 .text-container {
   min-height: 100vh;
+  text-decoration: underline;
 }
 
-p {
+h3 {
   color: rgba(255, 255, 255, 0.7);
   font-family: "Bebas Neue", cursive;
-  font-size: 2rem;
+  font-size: 1.8rem;
+  letter-spacing: 1px;
+}
+
+h4 {
+  color: rgba(255, 255, 255, 0.7);
+  font-family: "Bebas Neue", cursive;
+  font-size: 1.3rem;
+  letter-spacing: 1px;
 }
 
 .btn-style {
@@ -133,6 +142,16 @@ p {
 
 .color-black {
   color: #000;
+}
+
+.color-pink {
+  color: #f09;
+}
+
+a {
+  color: #fff;
+  font-family: "Bebas Neue", cursive;
+  font-size: 1.3rem;
 }
 
 /* HERO */
