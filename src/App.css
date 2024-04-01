@@ -172,3 +172,12 @@ a {
   overflow: hidden;
   z-index: 100;
 }
+
+footer p {
+  font-size: 1.1rem;
+  letter-spacing: 2px;
+  margin-top: 20px;
+  color: rgba(255, 255, 255, 0.5);
+  font-weight: bold;
+  font-family: "Bebas Neue", cursive;
+}

@@ -6,6 +6,8 @@ import nft1 from "./assets/nft.svg";
 import bgMusic from "./assets/bg-music.mp3";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faLinkedin, faGithub } from "@fortawesome/free-brands-svg-icons";
 
 const OPENSEA_LINK = "";
 const TOTAL_MINT_COUNT = 50;
@@ -208,41 +210,66 @@ const App = () => {
   );
 
   return (
-    <section id="hero">
-      <div className="container">
-        <ToastContainer />
-        <div className="row g-5 align-items-center justify-content-center">
-          <div className="col-lg-7 col-md-7 col-sm-6 col- mb-5 col-11">
-            <h1 className="neonText">
-              CosmoPunk
-              <br />
-              Studio
-            </h1>
-            <h3>Craft, Click, Crypto</h3>
-            <h4 className="mb-3">
-              <span className="color-pink">{totalMintCount}</span> NFTs minted
-            </h4>
+    <div>
+      <section id="hero">
+        <div className="container">
+          <ToastContainer />
+          <div className="row g-5 align-items-center justify-content-center">
+            <div className="col-lg-7 col-md-7 col-sm-6 col- mb-5 col-11">
+              <h1 className="neonText">
+                CosmoPunk
+                <br />
+                Studio
+              </h1>
+              <h3>Craft, Click, Crypto</h3>
+              <h4 className="mb-3">
+                <span className="color-pink">{totalMintCount}</span> NFTs minted
+              </h4>
 
-            {currentAccount === ""
-              ? renderNotConnectedContainer()
-              : renderMintUI()}
-            <div className="mt-2">
-              {mintedNFT === "" ? null : renderMintedNFT()}
+              {currentAccount === ""
+                ? renderNotConnectedContainer()
+                : renderMintUI()}
+              <div className="mt-2">
+                {mintedNFT === "" ? null : renderMintedNFT()}
+              </div>
             </div>
-          </div>
 
-          <div className="col-lg-4 col-md-5 col-sm-6 col-11 mb-5">
-            <div className="p-3 bg-custom">
-              <img src={nft1} alt="CosmoPunk" />
-              <h2 className="mt-4">
-                What you might <span className="color-black">create</span>
-              </h2>
+            <div className="col-lg-4 col-md-5 col-sm-6 col-11 mb-5">
+              <div className="p-3 bg-custom">
+                <img src={nft1} alt="CosmoPunk" />
+                <h2 className="mt-4">
+                  What you might <span className="color-black">create</span>
+                </h2>
+              </div>
             </div>
           </div>
         </div>
-      </div>
-      <audio ref={audioRef} src={bgMusic} autoPlay loop></audio>
-    </section>
+        <audio ref={audioRef} src={bgMusic} autoPlay loop></audio>
+      </section>
+      <footer className="text-white text-center py-4">
+        <div className="container">
+          <div className="d-flex g-5 align-items-center justify-content-center">
+            <a
+              href="https://www.linkedin.com/in/tanujn45/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="px-2 text-white"
+            >
+              <FontAwesomeIcon icon={faLinkedin} size="lg" />
+            </a>
+            <a
+              href="https://github.com/tanujn45"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="px-2 text-white"
+            >
+              <FontAwesomeIcon icon={faGithub} size="lg" />
+            </a>
+          </div>
+          <p className="text-white">❤️ Tanuj Namdeo</p>
+        </div>
+      </footer>
+    </div>
   );
 };
 
